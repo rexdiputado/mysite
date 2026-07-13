@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="28CAPS monogram">
+  <rect x="2" y="2" width="96" height="96" rx="22" fill="#2E6BFF"/>
+  <!-- amber "C" arc — the letter C in 28C and the single amber accent -->
+  <path d="M 69.28 29.02 A 30 30 0 1 1 69.28 74.98" fill="none" stroke="#FFB224" stroke-width="9" stroke-linecap="round"/>
+  <!-- "2" -->
+  <path d="M 35 42 Q 35 36 42 36 Q 49 36 49 43 Q 49 48 44 52 L 35 63 L 50 63" fill="none" stroke="#EDF2FB" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- "8" -->
+  <circle cx="60" cy="44" r="6.5" fill="none" stroke="#EDF2FB" stroke-width="6"/>
+  <circle cx="60" cy="58" r="8" fill="none" stroke="#EDF2FB" stroke-width="6"/>
+</svg>

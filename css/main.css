@@ -1,0 +1,704 @@
+/* 28CAPS — base styles: reset, design tokens (D2), typography (D3). Phase 1 foundation. */
+
+/* ---- Minimal modern reset ---- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img, picture, svg, video { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; }
+p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+a { color: inherit; text-decoration-thickness: from-font; }
+
+/* ---- Design tokens (D2) ---- */
+:root {
+  --ink: #060B16;
+  --surface: #0C1526;
+  --line: #1B2A45;
+  --azure: #2E6BFF;
+  --azure-bright: #5B8CFF;
+  --amber: #FFB224;
+  --paper: #EDF2FB;
+  --muted: #8B99B8;
+
+  /* Fluid type scale (D3) — clamp-based, ~1.2 ratio scaling up on wider viewports */
+  --step--1: clamp(0.83rem, 0.78rem + 0.24vw, 0.95rem);
+  --step-0:  clamp(1rem,    0.93rem + 0.34vw, 1.19rem);
+  --step-1:  clamp(1.2rem,  1.08rem + 0.60vw, 1.58rem);
+  --step-2:  clamp(1.44rem, 1.24rem + 1.00vw, 2.11rem);
+  --step-3:  clamp(1.73rem, 1.42rem + 1.55vw, 2.81rem);
+  --step-4:  clamp(2.07rem, 1.60rem + 2.36vw, 3.75rem);
+  --step-5:  clamp(2.49rem, 1.78rem + 3.55vw, 5.00rem);
+
+  --container: 72rem;
+}
+
+/* ---- Base typography (D3) ---- */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--step-0);
+  color: var(--paper);
+  background-color: var(--ink);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+h1 { font-size: var(--step-5); }
+h2 { font-size: var(--step-4); }
+h3 { font-size: var(--step-2); }
+
+/* ---- Layout ---- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 0.6rem + 2vw, 2rem);
+}
+
+/* ---- Focus visibility ---- */
+:focus-visible {
+  outline: 2px solid var(--azure-bright);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   Phase 2 — Header + hero (desktop layout)
+   ============================================================ */
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.72rem 1.3rem;
+  border-radius: 10px;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.btn--primary {
+  background-color: var(--azure);
+  color: #ffffff;
+}
+.btn--primary:hover {
+  background-color: var(--azure-bright);
+}
+.btn--ghost {
+  background-color: transparent;
+  border-color: var(--line);
+  color: var(--paper);
+}
+.btn--ghost:hover {
+  border-color: var(--azure-bright);
+  color: var(--azure-bright);
+}
+
+/* ---- Site header (sticky, translucent) ---- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: rgba(6, 11, 22, 0.72); /* --ink at 72% */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding-block: 0.85rem;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--paper);
+}
+.brand__mark {
+  width: 36px;
+  height: 36px;
+}
+.brand__word {
+  font-size: 1.15rem;
+}
+.nav {
+  display: flex;
+  gap: 1.6rem;
+  margin-inline-start: auto;
+}
+.nav__link {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: var(--step--1);
+  transition: color 0.2s ease;
+}
+.nav__link:hover {
+  color: var(--paper);
+}
+
+/* ---- Hero ---- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-block: 7rem 4rem;
+}
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.25;
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 28% 42%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 75% at 28% 42%, #000 35%, transparent 100%);
+}
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(40rem 30rem at 74% 28%, rgba(46, 107, 255, 0.40), transparent 70%),
+    radial-gradient(22rem 18rem at 88% 76%, rgba(255, 178, 36, 0.18), transparent 70%);
+  filter: blur(6px);
+}
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 56rem;
+}
+.hero__eyebrow {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--azure-bright);
+  margin-bottom: 1.25rem;
+}
+.hero__title {
+  font-size: var(--step-5);
+  margin-bottom: 1.5rem;
+}
+.hero__lead {
+  font-size: var(--step-1);
+  color: var(--muted);
+  max-width: 44rem;
+  margin-bottom: 2rem;
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ---- Hero entrance animation (D7) ----
+   Safe reduced-motion pattern: the VISIBLE state is the unconditional default.
+   The hidden/initial state + animation are applied ONLY when the user has not
+   requested reduced motion, so reduced-motion users never get stuck at opacity:0. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__eyebrow,
+  .hero__title,
+  .hero__lead,
+  .hero__actions {
+    opacity: 0;
+    animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .hero__eyebrow { animation-delay: 0.05s; }
+  .hero__title   { animation-delay: 0.15s; }
+  .hero__lead    { animation-delay: 0.30s; }
+  .hero__actions { animation-delay: 0.45s; }
+}
+
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(1.25rem); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   Phase 3 — Services + Selected work (desktop layout)
+   ============================================================ */
+
+/* ---- Shared section heading treatment (consistent with hero) ---- */
+.section {
+  padding-block: clamp(4rem, 3rem + 5vw, 7rem);
+}
+.section__eyebrow {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--azure-bright);
+  margin-bottom: 1rem;
+}
+.section__title {
+  font-size: var(--step-4);
+  max-width: 22ch;
+}
+.section__lead {
+  color: var(--muted);
+  font-size: var(--step-1);
+  margin-top: 1.25rem;
+  max-width: 34ch;
+}
+.section__head {
+  margin-bottom: 3rem;
+}
+
+/* ---- Services: asymmetric intro column + numbered rows (not an equal-card grid) ---- */
+.services__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+}
+.services__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.service {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: start;
+  gap: 1.25rem;
+  padding: 1.75rem 1.5rem;
+  border-top: 1px solid var(--line);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.services__list .service:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.service:hover {
+  background-color: var(--surface);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -14px rgba(46, 107, 255, 0.45);
+}
+.service__index {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  color: var(--muted);
+  padding-top: 0.2rem;
+}
+.service__icon {
+  display: inline-flex;
+  color: var(--azure);
+  transition: color 0.2s ease;
+}
+.service__icon svg {
+  width: 28px;
+  height: 28px;
+}
+.service:hover .service__icon {
+  color: var(--azure-bright);
+}
+.service__title {
+  font-size: var(--step-1);
+  margin-bottom: 0.5rem;
+}
+.service__blurb {
+  color: var(--muted);
+  max-width: 54ch;
+}
+
+/* ---- Selected work: full-width editorial case-study rows ---- */
+.work__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+.work-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 2rem;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.work-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--azure-bright);
+  box-shadow: 0 18px 44px -20px rgba(46, 107, 255, 0.55);
+}
+.work-card__kicker {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--azure-bright);
+  margin-bottom: 0.75rem;
+}
+.work-card__title {
+  font-size: var(--step-2);
+  margin-bottom: 0.6rem;
+}
+.work-card__desc {
+  color: var(--muted);
+  max-width: 60ch;
+  margin-bottom: 1.25rem;
+}
+.chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.chip {
+  font-size: var(--step--1);
+  color: var(--paper);
+  background-color: rgba(46, 107, 255, 0.12);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.35rem 0.8rem;
+  line-height: 1;
+}
+.work-card__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  min-width: 11rem;
+}
+.work-card__stat-num {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--amber);
+}
+.work-card__stat-label {
+  color: var(--muted);
+  font-size: var(--step--1);
+  margin-top: 0.6rem;
+  max-width: 11rem;
+}
+
+/* ============================================================
+   Phase 4 — About/stats + Contact + Footer (desktop layout)
+   ============================================================ */
+
+/* ---- About / stats band ---- */
+.about__lead {
+  max-width: 62ch;
+}
+.stats {
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+.stat {
+  padding: 1.75rem;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.stat__num {
+  display: block;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--step-4);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--amber);
+}
+.stat__label {
+  display: block;
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+/* ---- Contact ---- */
+.contact__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: start;
+}
+.contact__details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+.contact__item {
+  display: grid;
+  gap: 0.35rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.contact__item:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.contact__label {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--azure-bright);
+}
+.contact__value {
+  font-size: var(--step-1);
+  color: var(--paper);
+}
+.contact__link {
+  width: fit-content;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.contact__link:hover {
+  color: var(--azure-bright);
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  background-color: var(--ink);
+  padding-block: 2.5rem;
+}
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+}
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.site-footer__tagline {
+  color: var(--muted);
+  font-size: var(--step--1);
+  max-width: 24ch;
+}
+.site-footer__nav {
+  display: flex;
+  gap: 1.5rem;
+}
+.site-footer__nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--step--1);
+  transition: color 0.2s ease;
+}
+.site-footer__nav a:hover {
+  color: var(--paper);
+}
+.site-footer__legal {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.site-footer__copy {
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+.site-footer__legal a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: var(--step--1);
+  transition: color 0.2s ease;
+}
+.site-footer__legal a:hover {
+  color: var(--paper);
+}
+
+/* ============================================================
+   Phase 5 — Motion pass (JS-gated reveals + scrolled header)
+   ============================================================ */
+
+/* Reveal system — FAIL-SAFE gating (D7), same approach as the hero entrance
+   animation: the hidden state exists ONLY under `html.reveal-ready`, a class
+   main.js adds solely when JS runs AND prefers-reduced-motion is not set.
+   With JS off or reduced motion on, this rule never matches and every
+   [data-reveal] element stays fully visible. There is deliberately NO
+   unconditional `[data-reveal] { opacity: 0 }`. */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Scrolled-header state — a style change (denser background + shadow), not
+   motion, so it is allowed to apply/toggle even under reduced motion. This rule
+   only adds a transition to the existing .site-header; its resting appearance
+   (set in the Phase 2 block) is unchanged. */
+.site-header {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.site-header.is-scrolled {
+  background-color: rgba(6, 11, 22, 0.92); /* --ink at 92% (denser than resting 72%) */
+  box-shadow: 0 14px 30px -22px rgba(0, 0, 0, 0.85);
+}
+
+/* Optional ambient hero effect — a subtle drift of the decorative glow layer,
+   CSS-only and gated behind reduced-motion (reduced users get a static glow).
+   Does not touch the hero text entrance animation. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__glow {
+    animation: hero-drift 20s ease-in-out infinite alternate;
+  }
+}
+@keyframes hero-drift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1.02); }
+  to   { transform: translate3d(1.5%, 1.5%, 0) scale(1.06); }
+}
+
+/* ============================================================
+   Phase 6 — Responsive, accessibility, mobile nav
+   ============================================================ */
+
+/* Header nav grouping: wraps the desktop nav + CTA into one panel the hamburger
+   controls. Desktop appearance is unchanged — the group sits at the far right,
+   links then CTA, with the same 2rem gap; the auto push now lives on .site-nav. */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-inline-start: auto;
+}
+.site-nav .nav {
+  margin-inline-start: 0;
+}
+
+/* Hamburger toggle — hidden on desktop; shown at the mobile breakpoint (with JS) */
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin-inline-start: auto;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--paper);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.nav-toggle:hover {
+  color: var(--azure-bright);
+  border-color: var(--azure-bright);
+}
+
+/* ---- 1024px: collapse the asymmetric grids ---- */
+@media (max-width: 1024px) {
+  .services__inner { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---- 768px: mobile nav + stack the two-column sections ---- */
+@media (max-width: 768px) {
+  /* Mobile nav — base (JS OFF): the panel stays visible and stacked so every
+     link is reachable without JS. The header row wraps to fit it. */
+  .site-header__inner {
+    flex-wrap: wrap;
+    position: relative;
+  }
+  .site-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+    margin-inline-start: 0;
+    margin-top: 0.5rem;
+  }
+  .site-nav .nav {
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: stretch;
+  }
+  .nav__link { padding: 0.75rem 0.25rem; }   /* ~44px tap target */
+  .nav__cta { width: 100%; }
+
+  /* Mobile nav — JS ON: reveal the hamburger and collapse the panel into a
+     dropdown toggled by .is-open. */
+  html.js-nav .nav-toggle { display: inline-flex; }
+  html.js-nav .site-header__inner { flex-wrap: nowrap; }
+  html.js-nav .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+    padding: 1rem clamp(1rem, 0.6rem + 2vw, 2rem) 1.25rem;
+    background-color: rgba(6, 11, 22, 0.98);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.85);
+  }
+  html.js-nav .site-nav.is-open { display: flex; }
+
+  /* Comfortable tap targets for buttons on touch screens */
+  .btn { min-height: 44px; }
+
+  /* Section stacking */
+  .work-card { grid-template-columns: 1fr; gap: 1.5rem; }
+  .work-card__stat { align-items: flex-start; text-align: left; min-width: 0; }
+  .work-card__stat-label { max-width: none; }
+  .contact__inner { grid-template-columns: 1fr; }
+}
+
+/* ---- 480px: single-column stats + tighter service rows ---- */
+@media (max-width: 480px) {
+  .stats { grid-template-columns: 1fr; }
+  .service { column-gap: 1rem; padding-inline: 1rem; }
+}
